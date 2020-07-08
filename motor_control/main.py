@@ -22,8 +22,7 @@ class Motors():
         self.left_motor = Motor(left_pin_engine, left_pin_H_bridge)
         self.right_motor = Motor(right_pin_engine, right_pin_H_bridge)
         # private attributes.
-        self.__left_speed, 
-        self.__right_speed = initial_speeds
+        self.__left_speed, self.__right_speed = initial_speeds
         
         # set warnings.
         gpio.setwarnings(set_warnings)
