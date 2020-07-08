@@ -41,6 +41,8 @@ class Motors():
         gpio.setup(self.left_motor.h_bridge, gpio.OUT)
         gpio.setup(self.right_motor.h_bridge, gpio.OUT)
         # setup engine motors.
+        gpio.setup(self.left_motor.engine, gpio.OUT)
+        gpio.setup(self.right_motor.engine, gpio.OUT)
         self.__left_motor_pwm   = gpio.PWM(self.left_motor.engine, pwm_frequency)
         self.__right_motor_pwm  = gpio.PWM(self.right_motor.engine, pwm_frequency)
         # initialize motors.
