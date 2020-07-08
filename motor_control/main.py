@@ -9,10 +9,11 @@ class Motors():
 
         You can set the speed of each motor by changing the properties left speed and right speed.
         Its speed can vary from -100 to 100. Note that the sign indicates the direction of rotation. 
+        Note: you shouldn't have more than one instance at time.
     """
     
     # initialize instance.
-    def __init__(self, *, left_pin_engine, left_pin_H_bridge, right_pin_engine, right_pin_H_bridge, pwm_frequency=60, initial_speeds=(0,0), pin_mode="BCM", set_warnings=False):
+    def __init__(self, left_pin_engine, left_pin_H_bridge, right_pin_engine, right_pin_H_bridge, *, pwm_frequency=60, initial_speeds=(0,0), pin_mode="BCM", set_warnings=False):
         
         # motor class.
         Motor = collections.namedtuple("Motor", "engine h_bridge")
@@ -50,6 +51,9 @@ class Motors():
 
         super().__init__()
     
+    def __del__(self):
+        self.close()
+
     # abstract general moving.
     def move(self, left_speed, right_speed):
         """
@@ -100,5 +104,5 @@ class Motors():
         gpio.cleanup(self.right_motor.h_bridge)
 
     @staticmethod
-    def clean_all_motors():
+    def close():
         gpio.cleanup()
