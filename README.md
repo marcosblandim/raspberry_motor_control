@@ -1,6 +1,5 @@
 # raspberry_motor_control
-Small library for controlling motors which follows the engine/H-bridge circuit design
-(described in this repository) with a Raspberry Pi.
+Small library for controlling motors which follows the engine/H-bridge circuit design with a Raspberry Pi.
 
 # Usage
 * You can set the speed of each motor by changing the properties `left_speed` and `right_speed`.
