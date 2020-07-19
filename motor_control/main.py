@@ -107,3 +107,5 @@ class Motors():
     @staticmethod
     def close():
         gpio.cleanup()
+
+# printar velocidade "ao vivo"
