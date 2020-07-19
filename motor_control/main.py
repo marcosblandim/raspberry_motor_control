@@ -53,18 +53,14 @@ class Motors():
         super().__init__()
     
     def __del__(self):
+        self.stop()
         self.close()
+        super().__del__()
 
-    # abstract general moving.
-    def move(self, left_speed, right_speed):
-        """
-        Sets the speed of both motors.
-        """
-        self.left_speed = left_speed        
-        self.right_speed = right_speed
 
+    ### private methods ###
     # handle the speed of the left motor.
-    def set_left_speed(self, speed):
+    def __set_left_speed(self, speed):
         # stop engine if changing directions.
         if (speed < 0) != (self.__left_speed < 0):
             self.__left_motor_pwm.ChangeDutyCycle(0)
@@ -75,13 +71,11 @@ class Motors():
         # update private attribute.
         self.__left_speed = speed
 
-    def get_left_speed(self):
+    def __get_left_speed(self):
         return self.__left_speed
 
-    left_speed = property(get_left_speed, set_left_speed, doc="the speed of the left motor.")
-
     # handle the speed of the right motor.
-    def set_right_speed(self, speed):
+    def __set_right_speed(self, speed):
         # stop engine if changing directions.
         if (speed < 0) != (self.__right_speed < 0):
             self.__right_motor_pwm.ChangeDutyCycle(0)
@@ -92,20 +86,34 @@ class Motors():
         # update private attribute.
         self.__right_speed = speed
 
-    def get_right_speed(self):
+    def __get_right_speed(self):
         return self.__right_speed
-
-    right_speed = property(get_right_speed, set_right_speed, doc="the speed of the right motor.")
     
-    # handle cleanup.
-    def clean_motors(self):
+
+    ### public methods ###
+    # abstract general moving.
+
+    left_speed = property(__get_left_speed, __set_left_speed, doc="the speed of the left motor.")
+    right_speed = property(__get_right_speed, __set_right_speed, doc="the speed of the right motor.")
+
+    def move(self, left_speed, right_speed):
+        """
+        Sets the speed of both motors.
+        """
+        self.left_speed = left_speed        
+        self.right_speed = right_speed
+
+    def stop(self):
+        self.move(0,0)
+
+    # close this motor pins.
+    def close(self):
         gpio.cleanup(self.left_motor.engine)
         gpio.cleanup(self.left_motor.h_bridge)
         gpio.cleanup(self.right_motor.engine)
         gpio.cleanup(self.right_motor.h_bridge)
 
+    # clean all pins.
     @staticmethod
-    def close():
+    def close_all():
         gpio.cleanup()
-
-# printar velocidade "ao vivo"

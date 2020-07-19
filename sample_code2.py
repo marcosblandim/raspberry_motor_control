@@ -1,3 +1,8 @@
+'''
+This implements a trackbar motor controller.
+Important note: Opencv module is required for this code to run.
+'''
+
 import numpy as np
 import cv2
 
@@ -11,7 +16,7 @@ RIGHT_H_BRIDGE_PIN = 21
 
 motors = Motors(LEFT_ENGINE_PIN, LEFT_H_BRIDGE_PIN, RIGHT_ENGINE_PIN, RIGHT_H_BRIDGE_PIN)
 
-# Create a black image, a window
+# Create a black image and a window
 empty_iamge = np.zeros((1,1,1), np.uint8)
 cv2.namedWindow('empty window')
 
